@@ -4,7 +4,7 @@ const WINDOW_MS: Record<string, number> = {
   five_hour: 5 * 3600_000,
   seven_day: 7 * 86400_000,
 }
-const CELLS = 10
+const CELLS = 5
 
 const remaining = (ms: number) => {
   const m = Math.max(0, Math.round(ms / 60000))
@@ -18,7 +18,7 @@ const bar = (label: string, used: number, elapsed: number | null, detail: string
   const mark = elapsed === null ? -1 : Math.min(CELLS - 1, Math.round(elapsed * CELLS))
   let cells = ''
   for (let i = 0; i < CELLS; i++) {
-    cells += i === mark ? '│' : i < filled ? '█' : '░'
+    cells += i === mark ? '│' : i < filled ? '▇' : '▁'
   }
   return `${label} ${cells} ${detail}`
 }
@@ -44,7 +44,7 @@ async function refresh($: any) {
     parts.push(bar(kind === 'five_hour' ? '5h' : '1w', r.percentUsed, elapsed, detail))
   }
 
-  $.ui.status(parts.length ? parts.join('   ') : undefined)
+  $.ui.status(parts.length ? parts.join("  ") : undefined)
 }
 
 export const register: Register = on => {
